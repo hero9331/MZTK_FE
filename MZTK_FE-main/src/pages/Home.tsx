@@ -7,13 +7,24 @@ const Home = () => {
   return (
     <div className="">
       <VoucherTest />
-      <button
-        className="bg-main p-2 m-2"
-        type="button"
-        onClick={() => navigate("/login")}
-      >
-        로그인 실험 페이지로 이동하기 &gt;
-      </button>
+
+      <div className="flex">
+        <button
+          className="bg-gray-600 text-white p-2 m-2 rounded"
+          type="button"
+          onClick={() => navigate("/")}
+        >
+          로그인 페이지로<br />이동하기 &gt;
+        </button>
+
+        <button
+          className="bg-blue-600 text-white p-2 m-2 rounded"
+          type="button"
+          onClick={() => navigate("/my")}
+        >
+          바우처 발급 페이지로 <br /> 이동하기 &gt;
+        </button>
+      </div>
     </div>
   );
 };

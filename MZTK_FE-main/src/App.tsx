@@ -1,6 +1,6 @@
 import { Layout } from "@components/layout";
 // My와 Verify가 추가되었습니다.
-import { Err401, Home, Login, My, Verify } from "@pages";
+import { Err401, Home, Login, My, Verify, LoginSuccess } from "@pages";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -8,16 +8,16 @@ function App() {
     <BrowserRouter>
       <Layout>
         <Routes>
-          {/* Home */}
-          <Route path="/" element={<Home />} />
+          {/* Main Entry (Login) */}
+          <Route path="/" element={<Login />} />
 
-          {/* Voucher Routes (새로 추가됨) */}
+          {/* Core Feature (Voucher Exchange) */}
+          <Route path="/exchange" element={<Home />} />
+
+          {/* Voucher Routes */}
           <Route path="/my" element={<My />} />       {/* 발급 페이지 */}
           <Route path="/verify" element={<Verify />} /> {/* 수령 페이지 */}
-
-          {/* Auth */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/login-success" element={<Navigate to="/" replace />} />
+          <Route path="/login-success" element={<LoginSuccess />} />
 
           {/* Error */}
           <Route path="/auth/error" element={<Err401 />} />

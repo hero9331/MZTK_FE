@@ -13,3 +13,15 @@ export const GetGoogleLogin = async () => {
 
   return data;
 };
+
+// POST: Request Challenge
+export const requestChallenge = async (address: string) => {
+  const { data } = await authApi.post("/wallet/challenge", { address });
+  return data; // { challenge: "..." }
+};
+
+// POST: Verify & Login
+export const verifySignatureAndLogin = async (address: string, signature: string) => {
+  const { data } = await authApi.post("/wallet/login", { address, signature });
+  return data; // { token: "...", ... }
+};

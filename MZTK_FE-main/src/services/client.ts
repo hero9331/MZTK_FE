@@ -1,16 +1,33 @@
 import axios, { type AxiosInstance } from "axios";
 
-const BASE = `${import.meta.env.VITE_API_BASE_URL}`;
+// .env 설정이 꼬일 수 있으므로, 로컬 개발용 주소를 강제로 지정합니다.
+const BASE = "http://localhost:8080/api";
+console.log("API Base URL:", BASE);
 
 const attachInterceptors = (instance: AxiosInstance) => {
+  instance.interceptors.request.use((config) => {
+    console.log(`📡 Sending Request: ${config.baseURL}${config.url}`);
+
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  });
+
   instance.interceptors.response.use(
     (response) => response,
     (error) => {
+      console.error("🚨 API Error:", error.response?.status, error.config?.url);
+      console.error("🔍 Error Details:", error.response?.data);
       const status = error.response?.status;
 
-      // 401 Unauthorize
+
+      // 401 Unauthorize - 잠시 리다이렉트 끔 (디버깅용)
       if (status === 401 || status === 403) {
-        window.location.href = "/auth/error";
+        // window.location.href = "/auth/error";
+        console.warn("401/403 Error detected, but redirect disabled for debugging.");
       }
 
       return Promise.reject(error);
